@@ -6,28 +6,20 @@ Este documento é o backlog macro, em etapas sequenciais. Cada etapa depende do 
 
 ---
 
-## Etapa 0 — Fundação (em andamento)
+## Etapa 0 — Fundação (concluída, aguardando commit)
+
+Detalhe completo em `plans/2026-09-11-etapa-0-fundacao.md`, incluindo descobertas não previstas (bugs de integração com base-ds, ver issues [#37](https://github.com/indianous/base-ds/issues/37)/[#38](https://github.com/indianous/base-ds/issues/38)).
 
 - [x] Scaffold `create-next-app` (Next.js 16, React 19, TypeScript, Tailwind v4)
 - [x] Bibliotecas instaladas: `base-ds` (local), TanStack Query, React Hook Form, Zod, `next-auth`, dnd-kit, date-fns, `@stomp/stompjs`, Vitest, Testing Library, Playwright
-- [x] Issue aberta em base-ds sobre falta de tokens em bloco `@theme` para Tailwind v4 ([#37](https://github.com/indianous/base-ds/issues/37))
-- [ ] **Stopgap de tema**: mapear os tokens do `base-ds` (`theme.css`) num bloco `@theme inline` em `app/globals.css` (cores, `boxShadow`, `borderRadius`, `borderWidth` — espaçamento/tipografia já batem com o default do Tailwind v4, não remapear)
-- [ ] Páginas placeholder das rotas de `04-rotas-e-telas.md` já geradas em `app/(auth)/` e `app/(app)/` — **ainda não commitadas**; revisar, ajustar `app/page.tsx` removido (colidia com `(app)/page.tsx`) e commitar
-- [ ] `app/providers.tsx` (client component): `SessionProvider` (next-auth) + `QueryClientProvider` (TanStack Query) + `ToastProvider`/`ToastViewport` (base-ds)
-- [ ] `app/layout.tsx`: importar `base-ds/styles`, envolver `children` em `Providers`
-- [ ] `lib/auth.ts`: `authOptions` do NextAuth — `CredentialsProvider` chamando `POST {BACKEND_API_URL}/api/auth/login`, `session.strategy = "jwt"`, `pages.signIn = "/login"`
-- [ ] `types/next-auth.d.ts`: augmentar `Session`/`User`/`JWT` com `accessToken`/`role`
-- [ ] `app/api/auth/[...nextauth]/route.ts`
-- [ ] `middleware.ts`: protege rotas `(app)` via `withAuth`, redireciona para `/login`
-- [ ] `.env.example`: `BACKEND_API_URL`, `NEXTAUTH_SECRET`, `NEXTAUTH_URL`
-- [ ] `lib/navigation.ts`: itens de menu (label, href, ícone) por seção (Funil, Inbox, Prospecção, Produtos, Usuários, Métricas, Perfil)
-- [ ] `components/app-sidebar.tsx` (client): `Sidebar` do base-ds + `usePathname()` para `active`, item `asChild` com `next/link`
-- [ ] `components/app-navbar.tsx` + `components/logout-button.tsx` (client, `signOut()`)
-- [ ] `app/(app)/layout.tsx`: compõe Navbar + Sidebar + conteúdo
-- [ ] `app/(auth)/layout.tsx`: layout centralizado simples para telas públicas
-- [ ] `vitest.config.ts` + `vitest.setup.ts` (jest-dom, plugin React, `vite-tsconfig-paths`)
-- [ ] `playwright.config.ts` (config mínima; specs reais só a partir da Etapa 1, quando houver algo de ponta a ponta pra clicar)
-- [ ] Testes: `lib/auth.test.ts` (mock de `fetch`, sucesso/falha do `authorize()`), `lib/navigation.test.ts` (formato dos itens), smoke test de `app/providers.tsx`
+- [x] Páginas placeholder das rotas de `04-rotas-e-telas.md` em `app/(auth)/` e `app/(app)/`
+- [x] `app/providers.tsx`, `lib/auth.ts` + `types/next-auth.d.ts`, `app/api/auth/[...nextauth]/route.ts`, `proxy.ts` (proteção de rotas)
+- [x] `.env.example`, `lib/navigation.ts`, `components/app-sidebar.tsx`, `components/app-navbar.tsx`, `components/logout-button.tsx`
+- [x] `app/(app)/layout.tsx`, `app/(auth)/layout.tsx`, `app/layout.tsx` (Providers + estilos do base-ds)
+- [x] Stopgap de tema (`@theme inline` + `@source`) em `app/globals.css`
+- [x] `vitest.config.ts`/`vitest.setup.ts`, `playwright.config.ts`, testes de `lib/navigation`, `lib/auth`, `app/providers`
+- [x] Validado: `next build` limpo (26 rotas), `next lint` limpo, `npm run dev` testado via curl (redirects de auth, renderização do base-ds)
+- [ ] Commit e push — aguardando confirmação do usuário
 
 ## Etapa 1 — Autenticação
 
