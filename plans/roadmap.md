@@ -6,7 +6,7 @@ Este documento é o backlog macro, em etapas sequenciais. Cada etapa depende do 
 
 ---
 
-## Etapa 0 — Fundação (concluída, aguardando commit)
+## Etapa 0 — Fundação (concluída)
 
 Detalhe completo em `plans/2026-09-11-etapa-0-fundacao.md`, incluindo descobertas não previstas (bugs de integração com base-ds, ver issues [#37](https://github.com/indianous/base-ds/issues/37)/[#38](https://github.com/indianous/base-ds/issues/38)).
 
@@ -19,7 +19,7 @@ Detalhe completo em `plans/2026-09-11-etapa-0-fundacao.md`, incluindo descoberta
 - [x] Stopgap de tema (`@theme inline` + `@source`) em `app/globals.css`
 - [x] `vitest.config.ts`/`vitest.setup.ts`, `playwright.config.ts`, testes de `lib/navigation`, `lib/auth`, `app/providers`
 - [x] Validado: `next build` limpo (26 rotas), `next lint` limpo, `npm run dev` testado via curl (redirects de auth, renderização do base-ds)
-- [ ] Commit e push — aguardando confirmação do usuário
+- [x] Commit e push (`59986bf`, já em `origin/main`)
 
 ## Etapa 1 — Autenticação
 
