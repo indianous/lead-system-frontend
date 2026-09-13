@@ -21,12 +21,16 @@ Detalhe completo em `plans/2026-09-11-etapa-0-fundacao.md`, incluindo descoberta
 - [x] Validado: `next build` limpo (26 rotas), `next lint` limpo, `npm run dev` testado via curl (redirects de auth, renderização do base-ds)
 - [x] Commit e push (`59986bf`, já em `origin/main`)
 
-## Etapa 1 — Autenticação
+## Etapa 1 — Autenticação (parcial — só `/login`)
 
-- [ ] `/login`: formulário (FormField + Input + PasswordInput do base-ds, React Hook Form + Zod), chama `signIn("credentials", ...)`
-- [ ] `/invite/[token]`: define senha inicial a partir de um convite
-- [ ] `/reset-password/[token]`: redefine senha a partir de token de recuperação
-- [ ] Testes (RTL): validação client-side, erro de credenciais inválidas, redirecionamento pós-login
+Detalhe completo em `plans/2026-09-12-etapa-1-autenticacao.md`, incluindo a correção de contrato
+em `POST /api/auth/login` (backend) e o bug de duplicação de React do base-ds descoberto no
+caminho (issue [base-ds#38](https://github.com/indianous/base-ds/issues/38)).
+
+- [x] `/login`: formulário (FormField + Input + PasswordInput do base-ds, React Hook Form + Zod), chama `signIn("credentials", ...)`
+- [ ] `/invite/[token]`: define senha inicial a partir de um convite — **bloqueado**: backend não tem endpoint de convite/token em nenhuma etapa do roadmap; retomar quando esse fluxo entrar em escopo no backend
+- [ ] `/reset-password/[token]`: redefine senha a partir de token de recuperação — mesmo bloqueio acima
+- [x] Testes (RTL): validação client-side, erro de credenciais inválidas, redirecionamento pós-login
 
 ## Etapa 2 — Usuários e Permissões
 
