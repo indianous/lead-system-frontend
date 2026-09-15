@@ -1,12 +1,13 @@
-import { Heading, Text } from "base-ds";
+import { Heading } from "base-ds";
+import { CreateUserForm } from "@/components/forms/CreateUserForm";
 
-export default function Page() {
+export default function NewUserPage() {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-4 max-w-md">
       <Heading as="h1" size="xl">
         Novo usuário
       </Heading>
-      <Text color="muted">Permissão: CREATE_USER</Text>
+      <CreateUserForm />
     </div>
   );
 }

@@ -32,15 +32,24 @@ caminho (issue [base-ds#38](https://github.com/indianous/base-ds/issues/38)).
 - [ ] `/reset-password/[token]`: redefine senha a partir de token de recuperação — mesmo bloqueio acima
 - [x] Testes (RTL): validação client-side, erro de credenciais inválidas, redirecionamento pós-login
 
-## Etapa 2 — Usuários e Permissões
+## Etapa 2 — Usuários e Permissões (concluída)
 
-Depende da Etapa 1 do backend.
+Depende da Etapa 1 do backend (e do `GET /api/roles`, adicionado fora do roadmap do backend na
+Etapa 2 dele). Detalhe completo em `plans/2026-09-12-etapa-2-usuarios-permissoes.md`.
 
-- [ ] `/users`: `Table` do base-ds + TanStack Query, papel e status (ativo/inativo)
-- [ ] `/users/new`: formulário de cadastro + geração do link de convite
-- [ ] `/users/[id]/edit`: altera papel, ativa/desativa
-- [ ] `/settings/roles`: matriz de papéis × permissões
-- [ ] Testes
+- [x] `/users`: `Table` do base-ds + TanStack Query, papel e status (ativo/inativo); mensagem de
+  "sem permissão" quando a API responde 403
+- [x] `/users/new`: formulário de cadastro (`CreateUserForm`) — admin define a senha inicial
+  direto no formulário, seguindo o contrato real do backend (`POST /api/users`); **não há** link
+  de convite (fora de escopo, backend não tem esse fluxo em nenhuma etapa do roadmap)
+- [x] `/users/[id]/edit`: altera papel (`Select`) e ativa/desativa (`Switch` via `Controller`)
+- [x] `/settings/roles`: lista papéis × permissões (`GET /api/roles`) — **somente leitura**, não
+  há endpoint de escrita de papel/permissão no backend
+- [x] `lib/api-client.ts` (`apiFetch`/`ApiError`) e `lib/queries/{users,roles}.ts` (TanStack Query)
+- [x] Testes (RTL): `api-client`, `CreateUserForm`, `EditUserForm`, `users/page`, `settings/roles/page`
+- [x] Gap identificado e adiado (fora de escopo desta etapa): sessão do NextAuth não carrega
+  `permissions` do usuário logado — itens de navegação não são escondidos por permissão ainda,
+  só ficam de fato protegidos pelo 403 do backend
 
 ## Etapa 3 — Catálogo de Produtos
 
