@@ -51,13 +51,20 @@ Etapa 2 dele). Detalhe completo em `plans/2026-09-12-etapa-2-usuarios-permissoes
   `permissions` do usuário logado — itens de navegação não são escondidos por permissão ainda,
   só ficam de fato protegidos pelo 403 do backend
 
-## Etapa 3 — Catálogo de Produtos
+## Etapa 3 — Catálogo de Produtos (concluída)
 
-Depende da Etapa 2 do backend.
+Depende da Etapa 2 do backend (já concluída). Detalhe completo em
+`plans/2026-09-15-etapa-3-catalogo-produtos.md`.
 
-- [ ] `/products`: lista (livre a qualquer usuário autenticado)
-- [ ] `/products/new`, `/products/[id]/edit` (`EDIT_CATALOG`)
-- [ ] Testes
+- [x] `/products`: lista (livre a qualquer usuário autenticado), `Table` com nome/tipo/faixa de
+  preço formatada em R$/status
+- [x] `/products/new`, `/products/[id]/edit` (`EDIT_CATALOG` só no backend — mesmo gap de UI da
+  Etapa 2: botão/link aparecem para todos, 403 do backend é quem protege de fato)
+- [x] `lib/money.ts` (`centsToReaisInput`/`reaisInputToCents`) — conversão reais↔centavos na
+  camada de apresentação, sem precisar de componente novo no `base-ds`
+- [x] `lib/queries/products.ts` — `useProduct(id)` deriva o produto da listagem (`GET /api/products`),
+  já que o backend não expõe `GET /api/products/{id}`
+- [x] Testes (RTL): `lib/money`, `CreateProductForm`, `EditProductForm`, `products/page`
 
 ## Etapa 4 — Funil de Leads (Kanban)
 

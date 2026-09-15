@@ -26,3 +26,33 @@ export interface UpdateUserRequest {
   roleId: string;
   active: boolean;
 }
+
+export type ProductType = "READY_MADE" | "CUSTOM";
+
+export interface ProductResponse {
+  id: string;
+  name: string;
+  type: ProductType;
+  description: string | null;
+  minPriceCents: number | null;
+  maxPriceCents: number | null;
+  active: boolean;
+  createdAt: string;
+}
+
+export interface CreateProductRequest {
+  name: string;
+  type: ProductType;
+  description: string | null;
+  minPriceCents: number | null;
+  maxPriceCents: number | null;
+}
+
+export interface UpdateProductRequest {
+  name: string;
+  type: ProductType;
+  description: string | null;
+  minPriceCents: number | null;
+  maxPriceCents: number | null;
+  active: boolean;
+}

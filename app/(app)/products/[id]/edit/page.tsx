@@ -1,12 +1,15 @@
-import { Heading, Text } from "base-ds";
+import { Heading } from "base-ds";
+import { EditProductForm } from "@/components/forms/EditProductForm";
 
-export default function Page() {
+export default async function EditProductPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-4 max-w-md">
       <Heading as="h1" size="xl">
         Editar produto
       </Heading>
-      <Text color="muted">Permissão: EDIT_CATALOG</Text>
+      <EditProductForm productId={id} />
     </div>
   );
 }
