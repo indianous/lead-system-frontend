@@ -56,3 +56,80 @@ export interface UpdateProductRequest {
   maxPriceCents: number | null;
   active: boolean;
 }
+
+export type LeadType = "DIRECT_CONTACT" | "LOCAL_SEARCH";
+export type Channel = "META_WHATSAPP" | "META_INSTAGRAM" | "META_MESSENGER" | "TELEGRAM" | "WEBSITE";
+export type SearchSource = "GOOGLE_MAPS" | "CNPJ_FEDERAL_REVENUE" | "GROUP";
+export type CaptureMethod = "MANUAL" | "API" | "AUTOMATED";
+export type FunnelStatus = "NEW" | "CONTACTED" | "PROPOSAL" | "NEGOTIATION" | "CLOSED" | "LOST";
+export type QualificationScore = "HIGH" | "MEDIUM" | "LOW";
+
+export interface LeadOriginResponse {
+  id: string;
+  originType: LeadType;
+  channel: Channel | null;
+  searchSource: SearchSource | null;
+  region: string | null;
+  searchSegment: string | null;
+  captureMethod: CaptureMethod;
+}
+
+export interface FunnelStatusHistoryResponse {
+  id: string;
+  previousStatus: FunnelStatus | null;
+  newStatus: FunnelStatus;
+  userId: string;
+  userName: string;
+  reason: string | null;
+  changedAt: string;
+}
+
+export interface LeadResponse {
+  id: string;
+  name: string;
+  leadType: LeadType;
+  phone: string | null;
+  email: string | null;
+  initialMessage: string | null;
+  estimatedBudgetCents: number | null;
+  desiredTimeline: string | null;
+  qualificationScore: QualificationScore | null;
+  funnelStatus: FunnelStatus;
+  lossReason: string | null;
+  origin: LeadOriginResponse;
+  assignedUserId: string;
+  assignedUserName: string;
+  productsOfInterest: ProductResponse[];
+  statusHistory: FunnelStatusHistoryResponse[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateLeadRequest {
+  name: string;
+  leadType: LeadType;
+  phone: string | null;
+  email: string | null;
+  initialMessage: string | null;
+  estimatedBudgetCents: number | null;
+  desiredTimeline: string | null;
+  qualificationScore: QualificationScore | null;
+  assignedUserId: string;
+  productIds: string[];
+  channel: Channel | null;
+  searchSource: SearchSource | null;
+  region: string | null;
+  searchSegment: string | null;
+}
+
+export interface UpdateLeadRequest {
+  name: string;
+  phone: string | null;
+  email: string | null;
+  initialMessage: string | null;
+  estimatedBudgetCents: number | null;
+  desiredTimeline: string | null;
+  qualificationScore: QualificationScore | null;
+  assignedUserId: string;
+  productIds: string[];
+}

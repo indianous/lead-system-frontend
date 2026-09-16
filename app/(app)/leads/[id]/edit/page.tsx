@@ -1,12 +1,15 @@
-import { Heading, Text } from "base-ds";
+import { Heading } from "base-ds";
+import { EditLeadForm } from "@/components/forms/EditLeadForm";
 
-export default function Page() {
+export default async function EditLeadPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-4 max-w-md">
       <Heading as="h1" size="xl">
         Editar lead
       </Heading>
-      <Text color="muted">Permissão: VIEW_OWN_LEADS ou VIEW_ALL_LEADS</Text>
+      <EditLeadForm leadId={id} />
     </div>
   );
 }

@@ -66,18 +66,31 @@ Depende da Etapa 2 do backend (já concluída). Detalhe completo em
   já que o backend não expõe `GET /api/products/{id}`
 - [x] Testes (RTL): `lib/money`, `CreateProductForm`, `EditProductForm`, `products/page`
 
-## Etapa 4 — Funil de Leads (Kanban)
+## Etapa 4 — Funil de Leads (Kanban) (concluída, exceto interações)
 
-Depende das Etapas 3, 5 e 7 do backend (leads, status, qualificação).
+Depende das Etapas 3, 5 e 7 do backend (leads, status, qualificação). Detalhe completo em
+`plans/2026-09-16-etapa-4-funil-leads-kanban.md` — o plano original previa adiar `/leads/[id]/status`
+por falta da Etapa 5 do backend, mas ela foi implementada e verificada antes desta etapa começar
+(pedido do usuário: backend Etapa 5 → frontend Etapa 4, nessa ordem), então o escopo foi
+restaurado para incluir a tela de mudança de status.
 
-- [ ] Verificar se a issue do componente Kanban ([#35](https://github.com/indianous/base-ds/issues/35)) foi resolvida; senão, avaliar implementação local temporária com `dnd-kit` + `Card` do base-ds (documentar como workaround provisório)
-- [ ] `/leads`: board com colunas por etapa do funil, filtro por tipo/canal
-- [ ] `/leads/new`: cadastro manual (Meta/Telegram)
-- [ ] `/leads/[id]`: detalhe (qualificação, origem, produtos, histórico)
-- [ ] `/leads/[id]/edit`
-- [ ] `/leads/[id]/interactions/new`
-- [ ] `/leads/[id]/status`: mudança de etapa / marcar perdido (exige motivo)
-- [ ] Testes
+- [x] Issue do componente Kanban ([#35](https://github.com/indianous/base-ds/issues/35)) já
+  estava resolvida — `KanbanBoard` usado diretamente, sem workaround
+- [x] `/leads`: board com as 6 colunas do funil, filtro por tipo/canal (`FilterDropdown`), drag-and-drop
+  chama `PATCH /api/leads/{id}/status` de verdade; mover para "Perdido" abre um `Dialog` pedindo o motivo
+- [x] `/leads/new`: cadastro manual — fixa `leadType=DIRECT_CONTACT` e só lista canais Meta/Telegram
+  (não usado para site nem busca local, conforme `04-rotas-e-telas.md`)
+- [x] `/leads/[id]`: detalhe (qualificação, origem, produtos de interesse); **sem** seção de
+  histórico de status ainda (não estava no plano original desta etapa — `statusHistory` já existe
+  na API, mas a exibição do histórico fica para quando a tela for revisitada)
+- [x] `/leads/[id]/edit`
+- [x] `/leads/[id]/status`: mudança de etapa / marcar perdido (exige motivo) — reintroduzida ao
+  plano por já ter suporte no backend
+- [ ] `/leads/[id]/interactions/new` — continua bloqueada (Etapa 6 do backend nem tem plano ainda)
+- [x] Primeira tela do projeto a usar `useToast`/`ToastProvider` (obrigatórios pelo `CLAUDE.md`)
+- [x] Testes (RTL): `CreateLeadForm`, `EditLeadForm`, `UpdateLeadStatusForm`, `LeadDetailView`,
+  `leads/page` (Kanban — sem simular drag-and-drop via dnd-kit, mesmo padrão de teste usado pelo
+  próprio `KanbanBoard` do base-ds, que só testa `computeCardMove` isoladamente)
 
 ## Etapa 5 — Central de mensagens
 

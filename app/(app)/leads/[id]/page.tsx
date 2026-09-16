@@ -1,12 +1,7 @@
-import { Heading, Text } from "base-ds";
+import { LeadDetailView } from "@/components/LeadDetailView";
 
-export default function Page() {
-  return (
-    <div className="flex flex-col gap-2">
-      <Heading as="h1" size="xl">
-        Detalhe do lead
-      </Heading>
-      <Text color="muted">Permissão: VIEW_OWN_LEADS ou VIEW_ALL_LEADS</Text>
-    </div>
-  );
+export default async function LeadDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+
+  return <LeadDetailView leadId={id} />;
 }
