@@ -57,6 +57,9 @@ export function LeadDetailView({ leadId }: { leadId: string }) {
         </Heading>
         <div className="flex gap-2">
           <Button variant="outline" asChild>
+            <Link href={`/leads/${lead.id}/chat`}>Conversar</Link>
+          </Button>
+          <Button variant="outline" asChild>
             <Link href={`/leads/${lead.id}/status`}>Mudar etapa</Link>
           </Button>
           <Button asChild>

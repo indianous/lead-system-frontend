@@ -68,6 +68,18 @@ describe("LeadDetailView", () => {
     expect(screen.getByText("Alta")).toBeInTheDocument();
   });
 
+  it("links to the conversation chat page", () => {
+    vi.mocked(useLead).mockReturnValue({
+      data: baseLead,
+      isLoading: false,
+      error: null,
+    } as unknown as ReturnType<typeof useLead>);
+
+    render(<LeadDetailView leadId="lead-1" />);
+
+    expect(screen.getByRole("link", { name: "Conversar" })).toHaveAttribute("href", "/leads/lead-1/chat");
+  });
+
   it("shows a permission message when the query fails with 403", () => {
     vi.mocked(useLead).mockReturnValue({
       data: undefined,

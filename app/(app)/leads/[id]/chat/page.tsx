@@ -1,12 +1,7 @@
-import { Heading, Text } from "base-ds";
+import { ConversationChatView } from "@/components/ConversationChatView";
 
-export default function Page() {
-  return (
-    <div className="flex flex-col gap-2">
-      <Heading as="h1" size="xl">
-        Conversa do lead
-      </Heading>
-      <Text color="muted">Permissão: VIEW_OWN_LEADS ou VIEW_ALL_LEADS</Text>
-    </div>
-  );
+export default async function ChatPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+
+  return <ConversationChatView leadId={id} />;
 }

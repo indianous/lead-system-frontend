@@ -92,14 +92,34 @@ restaurado para incluir a tela de mudança de status.
   `leads/page` (Kanban — sem simular drag-and-drop via dnd-kit, mesmo padrão de teste usado pelo
   próprio `KanbanBoard` do base-ds, que só testa `computeCardMove` isoladamente)
 
-## Etapa 5 — Central de mensagens
+## Etapa 5 — Central de mensagens (concluída, exceto `/inbox`)
 
-Depende das Etapas 8 e 9 do backend (Conversation/Message, WebSocket).
+Detalhe completo em `plans/2026-09-17-etapa-5-central-de-mensagens.md`.
 
-- [ ] Verificar se a issue do componente de chat ([#36](https://github.com/indianous/base-ds/issues/36)) foi resolvida; senão, avaliar implementação local temporária
-- [ ] `/inbox`: lista de conversas ordenada pela mensagem mais recente, indicador de não lida
-- [ ] `/leads/[id]/chat`: thread de mensagens + envio + client STOMP (`@stomp/stompjs`) para tempo real; alternância entre canais quando o lead tiver mais de uma conversa
-- [ ] Testes (incluindo mock do cliente STOMP)
+- [x] Issue do componente de chat ([#36](https://github.com/indianous/base-ds/issues/36)) já
+  estava resolvida — `ConversationThread` e `ConversationList` usados diretamente do base-ds
+- [ ] `/inbox` — **fora de escopo**: o backend não tem endpoint agregado de conversas de todos os
+  leads, nem qualquer conceito de "não lida" no modelo de dados (`Message`/`Conversation` não têm
+  `read_at`/`unread_count`); retomar quando o backend ganhar isso. Placeholder da Etapa 0 continua
+  como está
+- [x] `/leads/[id]/chat` (`ConversationChatView`): sem conversa ainda, oferece iniciar por WhatsApp
+  (só se o lead tiver telefone) ou gerar link do Telegram (com botão de copiar — a conversa em si
+  só aparece depois que o lead manda `/start` pro bot e o vendedor recarrega a página, sem
+  polling); 1 conversa mostra a thread direto; 2+ usa `Tabs` do base-ds, uma aba por canal
+- [x] `ConversationThreadPane`: histórico via `GET /api/conversations/{id}/messages` + tempo real
+  via STOMP (`lib/realtime.ts`) — uma conexão por conversa ativa (não um socket global), fechada ao
+  trocar de aba; mensagens do WebSocket e da resposta do `POST` deduplicadas por `id` no cache do
+  TanStack Query, já que a mesma mensagem chega pelos dois caminhos
+- [x] JWT no header nativo `Authorization` do frame STOMP `CONNECT` (mesmo mecanismo do
+  `StompAuthChannelInterceptor` do backend — WebSocket nativo não permite header customizado no
+  handshake HTTP); URL do WS derivada de `NEXT_PUBLIC_BACKEND_API_URL` (troca `http`↔`ws`), sem
+  env var nova
+- [x] Botão "Conversar" adicionado em `LeadDetailView`, ao lado de "Mudar etapa"/"Editar"
+- [x] Sem BFF (confirmado: este frontend nunca teve rota `app/api/*` de proxy própria desde a
+  Etapa 2) — `ConversationChatView`/`ConversationThreadPane` chamam o backend direto via
+  `apiFetch`, mesmo padrão de todo o resto do app
+- [x] Testes (RTL): `lib/realtime.test.ts` (mock do `@stomp/stompjs`), `ConversationThreadPane`,
+  `ConversationChatView`, caso novo em `LeadDetailView.test.tsx`
 
 ## Etapa 6 — Prospecção
 

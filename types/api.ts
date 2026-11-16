@@ -133,3 +133,51 @@ export interface UpdateLeadRequest {
   assignedUserId: string;
   productIds: string[];
 }
+
+export type ConversationStatus = "OPEN" | "CLOSED";
+export type MessageDirection = "INBOUND" | "OUTBOUND";
+export type MessageStatus = "PENDING" | "SENT" | "DELIVERED" | "READ" | "FAILED";
+
+export interface ConversationResponse {
+  id: string;
+  leadId: string;
+  channel: Channel;
+  externalThreadId: string;
+  status: ConversationStatus;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface MessageResponse {
+  id: string;
+  conversationId: string;
+  direction: MessageDirection;
+  senderUserId: string | null;
+  senderUserName: string | null;
+  content: string;
+  mediaUrl: string | null;
+  externalMessageId: string | null;
+  status: MessageStatus;
+  sentAt: string;
+}
+
+// Só META_WHATSAPP e TELEGRAM são aceitos pelo backend (CreateConversationRequest.isChannelSupported).
+export interface CreateConversationRequest {
+  channel: Extract<Channel, "META_WHATSAPP" | "TELEGRAM">;
+}
+
+// POST /api/leads/{id}/conversations responde com formas diferentes por canal: WhatsApp cria a
+// Conversation (201, ConversationResponse); Telegram só devolve o deep link (200, sem persistir
+// nada ainda — a Conversation só nasce quando o lead manda /start pro bot, ver plano da Etapa 8
+// do backend).
+export type CreateConversationResponse = ConversationResponse | { deepLink: string };
+
+export function isDeepLinkResult(
+  result: CreateConversationResponse,
+): result is { deepLink: string } {
+  return "deepLink" in result;
+}
+
+export interface CreateMessageRequest {
+  content: string;
+}
